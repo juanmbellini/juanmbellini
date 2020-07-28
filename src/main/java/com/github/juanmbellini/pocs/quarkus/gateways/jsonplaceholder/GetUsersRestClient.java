@@ -16,8 +16,8 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,7 +45,7 @@ public interface GetUsersRestClient {
     // ================================================================================================================
 
     @Getter
-    @NoArgsConstructor(force = true)
+    @AllArgsConstructor
     class UserDto {
         private final Long id;
         private final String name;
@@ -58,14 +58,14 @@ public interface GetUsersRestClient {
     }
 
     @Getter
-    @NoArgsConstructor(force = true)
+    @AllArgsConstructor
     class GeoLocationDto {
         private final double lng;
         private final double lat;
     }
 
     @Getter
-    @NoArgsConstructor(force = true)
+    @AllArgsConstructor
     class CompanyDto {
         private final String name;
         private final String catchPhrase;
@@ -73,7 +73,7 @@ public interface GetUsersRestClient {
     }
 
     @Getter
-    @NoArgsConstructor(force = true)
+    @AllArgsConstructor
     class AddressDto {
         private final String street;
         private final String suite;

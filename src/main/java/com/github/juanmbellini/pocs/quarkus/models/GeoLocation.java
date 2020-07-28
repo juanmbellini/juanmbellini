@@ -16,11 +16,13 @@
 
 package com.github.juanmbellini.pocs.quarkus.models;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
+@RegisterForReflection
 public class GeoLocation {
 
     private final double longitude;
