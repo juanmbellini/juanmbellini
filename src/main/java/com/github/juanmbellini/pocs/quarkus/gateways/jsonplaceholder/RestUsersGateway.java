@@ -16,9 +16,6 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
 
-import com.github.juanmbellini.pocs.quarkus.models.Address;
-import com.github.juanmbellini.pocs.quarkus.models.Company;
-import com.github.juanmbellini.pocs.quarkus.models.GeoLocation;
 import com.github.juanmbellini.pocs.quarkus.models.User;
 import lombok.AllArgsConstructor;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -42,33 +39,7 @@ public class RestUsersGateway implements UsersGateway {
     public List<User> getUsers() {
         return getUsersRestClient.getUsers()
                 .stream()
-                .map(dto -> User.builder()
-                        .id(dto.getId())
-                        .name(dto.getName())
-                        .username(dto.getUsername())
-                        .email(dto.getEmail())
-                        .address(Address.builder()
-                                .street(dto.getAddress().getStreet())
-                                .suite(dto.getAddress().getSuite())
-                                .city(dto.getAddress().getCity())
-                                .zipcode(dto.getAddress().getZipcode())
-                                .geoLocation(GeoLocation.builder()
-                                        .latitude(dto.getAddress().getGeo().getLat())
-                                        .longitude(dto.getAddress().getGeo().getLng())
-                                        .build()
-                                )
-                                .build()
-                        )
-                        .phone(dto.getPhone())
-                        .website(dto.getWebsite())
-                        .company(Company.builder()
-                                .name(dto.getCompany().getName())
-                                .catchPhrase(dto.getCompany().getCatchPhrase())
-                                .bs(dto.getCompany().getBs())
-                                .build()
-                        )
-                        .build()
-                )
+                .map(GetUsersRestClient.UserDto::toUser)
                 .collect(Collectors.toList());
     }
 }

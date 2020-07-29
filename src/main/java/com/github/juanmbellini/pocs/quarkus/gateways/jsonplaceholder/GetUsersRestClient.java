@@ -16,6 +16,11 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
 
+import com.github.juanmbellini.pocs.quarkus.models.Address;
+import com.github.juanmbellini.pocs.quarkus.models.Company;
+import com.github.juanmbellini.pocs.quarkus.models.GeoLocation;
+import com.github.juanmbellini.pocs.quarkus.models.User;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -31,6 +36,7 @@ import java.util.List;
  * REST Client for the GET users endpoint of JSON Placeholder.
  */
 @ApplicationScoped
+@RegisterForReflection
 @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
 public interface GetUsersRestClient {
 
@@ -55,6 +61,19 @@ public interface GetUsersRestClient {
         private final String phone;
         private final String website;
         private final CompanyDto company;
+
+        public User toUser() {
+            return User.builder()
+                    .id(id)
+                    .name(name)
+                    .username(username)
+                    .email(email)
+                    .address(address.toAddress())
+                    .phone(phone)
+                    .website(website)
+                    .company(company.toCompany())
+                    .build();
+        }
     }
 
     @Getter
@@ -62,6 +81,13 @@ public interface GetUsersRestClient {
     class GeoLocationDto {
         private final double lng;
         private final double lat;
+
+        public GeoLocation toGeoLocation() {
+            return GeoLocation.builder()
+                    .latitude(lat)
+                    .longitude(lng)
+                    .build();
+        }
     }
 
     @Getter
@@ -70,6 +96,14 @@ public interface GetUsersRestClient {
         private final String name;
         private final String catchPhrase;
         private final String bs;
+
+        public Company toCompany() {
+            return Company.builder()
+                    .name(name)
+                    .catchPhrase(catchPhrase)
+                    .bs(bs)
+                    .build();
+        }
     }
 
     @Getter
@@ -80,5 +114,15 @@ public interface GetUsersRestClient {
         private final String city;
         private final String zipcode;
         private final GeoLocationDto geo;
+
+        public Address toAddress() {
+            return Address.builder()
+                    .street(street)
+                    .suite(suite)
+                    .city(city)
+                    .zipcode(zipcode)
+                    .geoLocation(geo.toGeoLocation())
+                    .build();
+        }
     }
 }
