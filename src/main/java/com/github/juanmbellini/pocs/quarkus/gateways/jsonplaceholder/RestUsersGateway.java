@@ -32,14 +32,14 @@ import java.util.stream.Collectors;
 public class RestUsersGateway implements UsersGateway {
 
     @RestClient
-    private final GetUsersRestClient getUsersRestClient;
+    private final UsersRestClient.GetUsers getUsersRestClient;
 
 
     @Override
     public List<User> getUsers() {
-        return getUsersRestClient.getUsers()
+        return getUsersRestClient.perform()
                 .stream()
-                .map(GetUsersRestClient.UserDto::toUser)
+                .map(UsersRestClient.UserDto::toUser)
                 .collect(Collectors.toList());
     }
 }

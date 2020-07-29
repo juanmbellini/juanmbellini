@@ -32,27 +32,23 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * REST Client for the GET users endpoint of JSON Placeholder.
- */
-@ApplicationScoped
-@RegisterForReflection
-@RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
-public interface GetUsersRestClient {
+class UsersRestClient {
 
-    @GET
-    @Path("/users")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<UserDto> getUsers();
+    @ApplicationScoped
+    @RegisterForReflection
+    @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
+    public interface GetUsers {
 
+        @GET
+        @Path("/users")
+        @Produces(MediaType.APPLICATION_JSON)
+        List<UserDto> perform();
+    }
 
-    // ================================================================================================================
-    // DTOs
-    // ================================================================================================================
 
     @Getter
     @AllArgsConstructor
-    class UserDto {
+    static class UserDto {
         private final Long id;
         private final String name;
         private final String username;
@@ -78,7 +74,7 @@ public interface GetUsersRestClient {
 
     @Getter
     @AllArgsConstructor
-    class GeoLocationDto {
+    static class GeoLocationDto {
         private final double lng;
         private final double lat;
 
@@ -92,7 +88,7 @@ public interface GetUsersRestClient {
 
     @Getter
     @AllArgsConstructor
-    class CompanyDto {
+    static class CompanyDto {
         private final String name;
         private final String catchPhrase;
         private final String bs;
@@ -108,7 +104,7 @@ public interface GetUsersRestClient {
 
     @Getter
     @AllArgsConstructor
-    class AddressDto {
+    static class AddressDto {
         private final String street;
         private final String suite;
         private final String city;
