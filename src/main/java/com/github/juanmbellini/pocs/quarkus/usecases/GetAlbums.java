@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * The get photos use case.
+ * The get albums use case.
  */
 @FunctionalInterface
 public interface GetAlbums extends Supplier<List<Album>> {

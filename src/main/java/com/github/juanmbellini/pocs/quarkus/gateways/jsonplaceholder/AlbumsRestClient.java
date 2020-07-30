@@ -23,6 +23,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -37,5 +38,15 @@ class AlbumsRestClient {
         @Path("/albums")
         @Produces(MediaType.APPLICATION_JSON)
         List<Album> perform();
+    }
+
+    @ApplicationScoped
+    @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
+    public interface GetUserAlbums {
+
+        @GET
+        @Path("/albums")
+        @Produces(MediaType.APPLICATION_JSON)
+        List<Album> perform(@QueryParam("userId") final long id);
     }
 }

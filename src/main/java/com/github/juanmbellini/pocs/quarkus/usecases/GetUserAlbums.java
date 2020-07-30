@@ -14,30 +14,16 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.usecases;
 
 import com.github.juanmbellini.pocs.quarkus.models.Album;
-import com.github.juanmbellini.pocs.quarkus.models.User;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
- * JSON Placeholder's albums gateway.
+ * The get user albums use case.
  */
-public interface AlbumsGateway {
-
-    /**
-     * Retrieves all {@link Album}s from JSON Placeholder.
-     *
-     * @return The {@link List} of {@link Album}s.
-     */
-    List<Album> getAlbums();
-
-    /**
-     * Retrieves a {@link User}'s {@link Album}s from JSON Placeholder.
-     *
-     * @param userId The user's id.
-     * @return The {@link List} of {@link Album}s.
-     */
-    List<Album> getUserAlbums(final Long userId);
+@FunctionalInterface
+public interface GetUserAlbums extends Function<Long, List<Album>> {
 }

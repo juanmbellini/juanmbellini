@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.usecases;
 
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.AlbumsGateway;
 import com.github.juanmbellini.pocs.quarkus.models.Album;
-import com.github.juanmbellini.pocs.quarkus.models.User;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
-/**
- * JSON Placeholder's albums gateway.
- */
-public interface AlbumsGateway {
+@ApplicationScoped
+@AllArgsConstructor
+class GetUserAlbumsImpl implements GetUserAlbums {
 
-    /**
-     * Retrieves all {@link Album}s from JSON Placeholder.
-     *
-     * @return The {@link List} of {@link Album}s.
-     */
-    List<Album> getAlbums();
+    private final AlbumsGateway albumsGateway;
 
-    /**
-     * Retrieves a {@link User}'s {@link Album}s from JSON Placeholder.
-     *
-     * @param userId The user's id.
-     * @return The {@link List} of {@link Album}s.
-     */
-    List<Album> getUserAlbums(final Long userId);
+
+    @Override
+    public List<Album> apply(@NonNull final Long userId) {
+        return albumsGateway.getUserAlbums(userId);
+    }
 }
