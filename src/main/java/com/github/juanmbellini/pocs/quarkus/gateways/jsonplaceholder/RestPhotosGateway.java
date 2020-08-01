@@ -32,10 +32,17 @@ public class RestPhotosGateway implements PhotosGateway {
 
     @RestClient
     private final PhotosRestClient.GetPhotos getPhotos;
+    @RestClient
+    private final PhotosRestClient.GetAlbumPhotos getAlbumPhotos;
 
 
     @Override
     public List<Photo> getPhotos() {
         return getPhotos.perform();
+    }
+
+    @Override
+    public List<Photo> getAlbumsPhotos(final List<Long> albumIds) {
+        return getAlbumPhotos.perform(albumIds);
     }
 }

@@ -16,7 +16,7 @@
 
 package com.github.juanmbellini.pocs.quarkus.controllers;
 
-import com.github.juanmbellini.pocs.quarkus.usecases.GetUserAlbums;
+import com.github.juanmbellini.pocs.quarkus.usecases.GetUserPhotos;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -28,18 +28,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Rest endpoint for getting a user's albums from JSON Placeholder.
+ * Rest endpoint for getting a user's photos from JSON Placeholder.
  */
-@Path("/users/{id : \\d+}/albums")
+@Path("/users/{id : \\d+}/photos")
 @AllArgsConstructor
-public class GetUserAlbumsResource {
+public class GetUserPhotosResource {
 
-    private final GetUserAlbums getUserAlbums;
+    private final GetUserPhotos getUserPhotos;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserAlbums(@PathParam("id") @NonNull final Long userId) {
-        final var albums = getUserAlbums.apply(userId);
+    public Response getUserPhotos(@PathParam("id") @NonNull final Long userId) {
+        final var albums = getUserPhotos.apply(userId);
         return Response.ok(albums).build();
     }
 }
