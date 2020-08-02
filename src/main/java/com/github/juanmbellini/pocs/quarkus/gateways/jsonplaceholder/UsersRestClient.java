@@ -20,7 +20,6 @@ import com.github.juanmbellini.pocs.quarkus.models.Address;
 import com.github.juanmbellini.pocs.quarkus.models.Company;
 import com.github.juanmbellini.pocs.quarkus.models.GeoLocation;
 import com.github.juanmbellini.pocs.quarkus.models.User;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -35,7 +34,6 @@ import java.util.List;
 class UsersRestClient {
 
     @ApplicationScoped
-    @RegisterForReflection
     @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
     public interface GetUsers {
 
