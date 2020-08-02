@@ -14,35 +14,33 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
-import com.github.juanmbellini.pocs.quarkus.models.Photo;
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.UsersGateway;
+import com.github.juanmbellini.pocs.quarkus.models.User;
 import lombok.AllArgsConstructor;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * JSON Placeholder's REST photos gateway.
+ * JSON Placeholder's REST users gateway.
  */
 @ApplicationScoped
 @AllArgsConstructor
-public class RestPhotosGateway implements PhotosGateway {
+public class RestUsersGateway implements UsersGateway {
 
     @RestClient
-    private final PhotosRestClient.GetPhotos getPhotos;
-    @RestClient
-    private final PhotosRestClient.GetAlbumPhotos getAlbumPhotos;
+    private final UsersRestClient.GetUsers getUsersRestClient;
 
 
     @Override
-    public List<Photo> getPhotos() {
-        return getPhotos.perform();
-    }
-
-    @Override
-    public List<Photo> getAlbumsPhotos(final List<Long> albumIds) {
-        return getAlbumPhotos.perform(albumIds);
+    public List<User> getUsers() {
+        return getUsersRestClient.perform()
+                .stream()
+                .map(UsersRestClient.UserDto::toUser)
+                .collect(Collectors.toList());
     }
 }

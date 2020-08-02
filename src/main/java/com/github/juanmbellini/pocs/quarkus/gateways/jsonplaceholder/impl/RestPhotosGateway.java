@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
-import com.github.juanmbellini.pocs.quarkus.models.Album;
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.PhotosGateway;
+import com.github.juanmbellini.pocs.quarkus.models.Photo;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 /**
- * JSON Placeholder's REST albums gateway.
+ * JSON Placeholder's REST photos gateway.
  */
 @ApplicationScoped
 @AllArgsConstructor
-public class RestAlbumsGateway implements AlbumsGateway {
+public class RestPhotosGateway implements PhotosGateway {
 
     @RestClient
-    private final AlbumsRestClient.GetAlbums getAlbums;
+    private final PhotosRestClient.GetPhotos getPhotos;
     @RestClient
-    private final AlbumsRestClient.GetUserAlbums getUserAlbums;
+    private final PhotosRestClient.GetAlbumPhotos getAlbumPhotos;
 
 
     @Override
-    public List<Album> getAlbums() {
-        return getAlbums.perform();
+    public List<Photo> getPhotos() {
+        return getPhotos.perform();
     }
 
     @Override
-    public List<Album> getUserAlbums(@NonNull final Long userId) {
-        return getUserAlbums.perform(userId);
+    public List<Photo> getAlbumsPhotos(final List<Long> albumIds) {
+        return getAlbumPhotos.perform(albumIds);
     }
 }

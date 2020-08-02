@@ -14,24 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.usecases;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
 import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.CommentsGateway;
 import com.github.juanmbellini.pocs.quarkus.models.Comment;
 import lombok.AllArgsConstructor;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
+/**
+ * JSON Placeholder's REST comments gateway.
+ */
 @ApplicationScoped
 @AllArgsConstructor
-class GetCommentsImpl implements GetComments {
+public class RestCommentsGateway implements CommentsGateway {
 
-    private final CommentsGateway commentsGateway;
+    @RestClient
+    private final CommentsRestClient.GetComments getCommentsRestClient;
 
 
     @Override
-    public List<Comment> apply(final String name, final String email) {
-        return commentsGateway.getComments(name, email);
+    public List<Comment> getComments(final String name, final String email) {
+        return getCommentsRestClient.perform(name, email);
     }
 }

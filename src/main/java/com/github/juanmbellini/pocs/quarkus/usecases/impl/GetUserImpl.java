@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.usecases;
+package com.github.juanmbellini.pocs.quarkus.usecases.impl;
 
 import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.UsersGateway;
 import com.github.juanmbellini.pocs.quarkus.models.User;
+import com.github.juanmbellini.pocs.quarkus.usecases.GetUsers;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;

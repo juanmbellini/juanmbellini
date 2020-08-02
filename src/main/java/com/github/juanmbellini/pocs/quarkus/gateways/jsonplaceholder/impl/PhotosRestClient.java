@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
 import com.github.juanmbellini.pocs.quarkus.models.Photo;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.usecases;
+package com.github.juanmbellini.pocs.quarkus.usecases.impl;
 
-import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.PhotosGateway;
-import com.github.juanmbellini.pocs.quarkus.models.Photo;
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.CommentsGateway;
+import com.github.juanmbellini.pocs.quarkus.models.Comment;
+import com.github.juanmbellini.pocs.quarkus.usecases.GetComments;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,13 +26,13 @@ import java.util.List;
 
 @ApplicationScoped
 @AllArgsConstructor
-class GetPhotosImpl implements GetPhotos {
+class GetCommentsImpl implements GetComments {
 
-    private final PhotosGateway photosGateway;
+    private final CommentsGateway commentsGateway;
 
 
     @Override
-    public List<Photo> get() {
-        return photosGateway.getPhotos();
+    public List<Comment> apply(final String name, final String email) {
+        return commentsGateway.getComments(name, email);
     }
 }

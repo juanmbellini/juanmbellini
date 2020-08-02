@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
 import com.github.juanmbellini.pocs.quarkus.models.Address;
 import com.github.juanmbellini.pocs.quarkus.models.Company;

@@ -14,32 +14,25 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder;
+package com.github.juanmbellini.pocs.quarkus.usecases.impl;
 
-import com.github.juanmbellini.pocs.quarkus.models.User;
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.AlbumsGateway;
+import com.github.juanmbellini.pocs.quarkus.models.Album;
+import com.github.juanmbellini.pocs.quarkus.usecases.GetAlbums;
 import lombok.AllArgsConstructor;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * JSON Placeholder's REST users gateway.
- */
 @ApplicationScoped
 @AllArgsConstructor
-public class RestUsersGateway implements UsersGateway {
+class GetAlbumsImpl implements GetAlbums {
 
-    @RestClient
-    private final UsersRestClient.GetUsers getUsersRestClient;
+    private final AlbumsGateway albumsGateway;
 
 
     @Override
-    public List<User> getUsers() {
-        return getUsersRestClient.perform()
-                .stream()
-                .map(UsersRestClient.UserDto::toUser)
-                .collect(Collectors.toList());
+    public List<Album> get() {
+        return albumsGateway.getAlbums();
     }
 }

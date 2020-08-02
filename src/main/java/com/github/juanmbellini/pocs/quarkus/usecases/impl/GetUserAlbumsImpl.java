@@ -14,35 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.usecases;
+package com.github.juanmbellini.pocs.quarkus.usecases.impl;
 
 import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.AlbumsGateway;
-import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.PhotosGateway;
 import com.github.juanmbellini.pocs.quarkus.models.Album;
-import com.github.juanmbellini.pocs.quarkus.models.Photo;
+import com.github.juanmbellini.pocs.quarkus.usecases.GetUserAlbums;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @AllArgsConstructor
-class GetUserPhotosImpl implements GetUserPhotos {
+class GetUserAlbumsImpl implements GetUserAlbums {
 
     private final AlbumsGateway albumsGateway;
-    private final PhotosGateway photosGateway;
 
 
     @Override
-    public List<Photo> apply(@NonNull final Long userId) {
-        final var albums = albumsGateway.getUserAlbums(userId);
-        return albums.isEmpty() ?
-                Collections.emptyList() :
-                albums.stream()
-                        .map(Album::getId)
-                        .collect(Collectors.collectingAndThen(Collectors.toList(), photosGateway::getAlbumsPhotos));
+    public List<Album> apply(@NonNull final Long userId) {
+        return albumsGateway.getUserAlbums(userId);
     }
 }
