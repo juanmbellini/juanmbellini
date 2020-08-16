@@ -9,12 +9,13 @@ repositories {
 }
 
 ext {
-    projectLombok = "1.18.12"
+    projectLombokVersion = "1.18.12"
+    hoverflyJavaVersion = "0.13.1"
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compileOnly "org.projectlombok:lombok:${projectLombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${projectLombokVersion}"
 
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
 
@@ -24,12 +25,17 @@ dependencies {
     implementation 'io.quarkus:quarkus-hibernate-orm-panache'
     implementation 'io.quarkus:quarkus-config-yaml'
     implementation 'io.quarkus:quarkus-hibernate-validator'
-    implementation 'io.quarkus:quarkus-smallrye-opentracing'
     implementation 'io.quarkus:quarkus-resteasy'
     implementation 'io.quarkus:quarkus-rest-client'
 
+// TODO: uncomment when smallrye/smallrye-opentracing#134 is resolved and merged:
+//    implementation 'io.quarkus:quarkus-smallrye-opentracing'
+
+
     testImplementation 'io.quarkus:quarkus-junit5-mockito'
     testImplementation 'io.rest-assured:rest-assured'
+
+    testImplementation "io.specto:hoverfly-java-junit5:${hoverflyJavaVersion}"
 }
 
 group 'com.github.juanmbellini'

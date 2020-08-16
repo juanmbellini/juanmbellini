@@ -14,17 +14,25 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.models;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import lombok.Builder;
+import com.github.juanmbellini.pocs.quarkus.models.GeoLocation;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@RegisterForReflection
-public class GeoLocation {
+@AllArgsConstructor
+@NoArgsConstructor(force = true, access = AccessLevel.PACKAGE)
+class GeoLocationDto {
+    private final Double lng;
+    private final Double lat;
 
-    private final Double longitude;
-    private final Double latitude;
+    public GeoLocation toGeoLocation() {
+        return GeoLocation.builder()
+                .latitude(lat)
+                .longitude(lng)
+                .build();
+    }
 }

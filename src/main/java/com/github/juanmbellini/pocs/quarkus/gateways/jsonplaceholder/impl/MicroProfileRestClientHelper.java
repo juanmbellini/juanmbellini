@@ -16,25 +16,22 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
-import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.UsersGateway;
-import com.github.juanmbellini.pocs.quarkus.models.User;
-import lombok.AllArgsConstructor;
+import com.github.juanmbellini.pocs.quarkus.exceptions.GatewayException;
+import lombok.experimental.UtilityClass;
 
-import java.util.List;
-import javax.enterprise.context.ApplicationScoped;
+import java.util.function.Supplier;
+import javax.ws.rs.WebApplicationException;
 
-/**
- * JSON Placeholder's REST users gateway.
- */
-@ApplicationScoped
-@AllArgsConstructor
-public class RestUsersGateway implements UsersGateway {
+@UtilityClass
+class MicroProfileRestClientHelper {
 
-    private final MicroProfileGetUsers microProfileGetUsers;
-
-
-    @Override
-    public List<User> getUsers() {
-        return microProfileGetUsers.perform();
+    /* package */ <T> T wrapForGatewayException(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (final WebApplicationException e) {
+            throw new GatewayException(e);
+        } catch (final Exception e) {
+            throw new GatewayException("Unexpected exception", e);
+        }
     }
 }
