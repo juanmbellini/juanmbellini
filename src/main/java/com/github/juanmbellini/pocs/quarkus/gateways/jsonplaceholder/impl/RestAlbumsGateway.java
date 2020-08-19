@@ -20,7 +20,6 @@ import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.AlbumsGatew
 import com.github.juanmbellini.pocs.quarkus.models.Album;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
@@ -32,19 +31,17 @@ import java.util.List;
 @AllArgsConstructor
 public class RestAlbumsGateway implements AlbumsGateway {
 
-    @RestClient
-    private final AlbumsRestClient.GetAlbums getAlbums;
-    @RestClient
-    private final AlbumsRestClient.GetUserAlbums getUserAlbums;
+    private final MicroProfileGetAlbums microProfileGetAlbums;
+    private final MicroProfileGetUserAlbums microProfileGetUserAlbums;
 
 
     @Override
     public List<Album> getAlbums() {
-        return getAlbums.perform();
+        return microProfileGetAlbums.perform();
     }
 
     @Override
     public List<Album> getUserAlbums(@NonNull final Long userId) {
-        return getUserAlbums.perform(userId);
+        return microProfileGetUserAlbums.perform(userId);
     }
 }

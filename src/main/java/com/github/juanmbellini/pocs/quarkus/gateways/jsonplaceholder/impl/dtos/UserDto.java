@@ -14,27 +14,39 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl.dtos;
 
-import com.github.juanmbellini.pocs.quarkus.models.Company;
+import com.github.juanmbellini.pocs.quarkus.models.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PACKAGE)
-class CompanyDto {
-    private final String name;
-    private final String catchPhrase;
-    private final String bs;
+import java.util.Optional;
 
-    public Company toCompany() {
-        return Company.builder()
+@Getter
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(force = true, access = AccessLevel.PACKAGE)
+public class UserDto {
+    private final Long id;
+    private final String name;
+    private final String username;
+    private final String email;
+    private final AddressDto address;
+    private final String phone;
+    private final String website;
+    private final CompanyDto company;
+
+    public User toUser() {
+        return User.builder()
+                .id(id)
                 .name(name)
-                .catchPhrase(catchPhrase)
-                .bs(bs)
+                .username(username)
+                .email(email)
+                .address(Optional.ofNullable(address).map(AddressDto::toAddress).orElse(null))
+                .phone(phone)
+                .website(website)
+                .company(Optional.ofNullable(company).map(CompanyDto::toCompany).orElse(null))
                 .build();
     }
 }

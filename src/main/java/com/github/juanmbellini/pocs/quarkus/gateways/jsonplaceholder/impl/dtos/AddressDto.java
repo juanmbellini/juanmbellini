@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
+package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl.dtos;
 
 import com.github.juanmbellini.pocs.quarkus.models.Address;
 import lombok.AccessLevel;
@@ -25,9 +25,9 @@ import lombok.NoArgsConstructor;
 import java.util.Optional;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(force = true, access = AccessLevel.PACKAGE)
-class AddressDto {
+public class AddressDto {
     private final String street;
     private final String suite;
     private final String city;

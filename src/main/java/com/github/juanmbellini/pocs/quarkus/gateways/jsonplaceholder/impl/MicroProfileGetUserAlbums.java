@@ -16,33 +16,34 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
-import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl.dtos.UserDto;
-import com.github.juanmbellini.pocs.quarkus.models.User;
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl.dtos.AlbumDto;
+import com.github.juanmbellini.pocs.quarkus.models.Album;
 import lombok.AllArgsConstructor;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 @AllArgsConstructor
-class MicroProfileGetUsers {
+class MicroProfileGetUserAlbums {
 
     @RestClient
-    private final MicroProfileGetUsersRestClient getUsers;
+    private final MicroProfileGetUserAlbumsRestClient microProfileGetUserAlbumsRestClient;
 
 
-    List<User> perform() {
+    List<Album> perform(final long id) {
         return MicroProfileRestClientHelper.wrapForGatewayException(
-                () -> getUsers.perform()
+                () -> microProfileGetUserAlbumsRestClient.perform(id)
                         .stream()
-                        .map(UserDto::toUser)
+                        .map(AlbumDto::toAlbum)
                         .collect(Collectors.toList())
         );
     }
@@ -50,11 +51,11 @@ class MicroProfileGetUsers {
 
     @ApplicationScoped
     @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
-    public interface MicroProfileGetUsersRestClient {
+    public interface MicroProfileGetUserAlbumsRestClient {
 
         @GET
-        @Path("/users")
+        @Path("/albums")
         @Produces(MediaType.APPLICATION_JSON)
-        List<UserDto> perform();
+        List<AlbumDto> perform(@QueryParam("userId") final long id);
     }
 }

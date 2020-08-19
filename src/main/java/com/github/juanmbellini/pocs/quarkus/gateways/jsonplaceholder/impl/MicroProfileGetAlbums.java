@@ -16,37 +16,45 @@
 
 package com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl;
 
+import com.github.juanmbellini.pocs.quarkus.gateways.jsonplaceholder.impl.dtos.AlbumDto;
 import com.github.juanmbellini.pocs.quarkus.models.Album;
+import lombok.AllArgsConstructor;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.stream.Collectors;
+
+@ApplicationScoped
+@AllArgsConstructor
+class MicroProfileGetAlbums {
+
+    @RestClient
+    private final MicroProfileGetAlbumsRestClient microProfileGetAlbumsRestClient;
 
 
-class AlbumsRestClient {
-
-    @ApplicationScoped
-    @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
-    public interface GetAlbums {
-
-        @GET
-        @Path("/albums")
-        @Produces(MediaType.APPLICATION_JSON)
-        List<Album> perform();
+    List<Album> perform() {
+        return MicroProfileRestClientHelper.wrapForGatewayException(
+                () -> microProfileGetAlbumsRestClient.perform()
+                        .stream()
+                        .map(AlbumDto::toAlbum)
+                        .collect(Collectors.toList())
+        );
     }
 
+
     @ApplicationScoped
     @RegisterRestClient(baseUri = "https://jsonplaceholder.typicode.com")
-    public interface GetUserAlbums {
+    public interface MicroProfileGetAlbumsRestClient {
 
         @GET
         @Path("/albums")
         @Produces(MediaType.APPLICATION_JSON)
-        List<Album> perform(@QueryParam("userId") final long id);
+        List<AlbumDto> perform();
     }
 }

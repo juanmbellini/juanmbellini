@@ -60,6 +60,7 @@ class MicroProfileGetUsersTest {
                 gatewayException.getResponse().getStatus(),
                 "The thrown GatewayException must contain a response with status code 500"
         );
+        hoverfly.verifyAll();
     }
 
     @Test
@@ -72,6 +73,7 @@ class MicroProfileGetUsersTest {
         final Executable executable = client::perform;
         // Then
         assertThrows(GatewayException.class, executable);
+        hoverfly.verifyAll();
     }
 
     @Test
